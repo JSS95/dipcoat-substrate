@@ -37,11 +37,15 @@ jobs:
           sudo apt-get install -y git
           git clone "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" .
 
-      - name: build doc
+      - name: build document
         run: |
           cd doc
           make html
           cd ..
+
+      - name: move document files to docs directory
+        run: |
+          mv -v doc/build/html/* docs/
 
       - name: checkout and push to source branch
         run: |
