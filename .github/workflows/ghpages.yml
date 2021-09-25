@@ -1,0 +1,23 @@
+# Inspired by https://github.com/annegentle/create-demo
+
+name: push doc to github pages
+
+env:
+  GITHUB_ACTOR: JSS95
+  GITHUB_REPOSITORY: JSS95/dipcoat-substrate
+
+on: [push]  # modify to push on master after all is done.
+
+jobs:
+
+  build-doc:
+
+    runs-on: ubuntu-latest
+
+    steps: 
+
+      - name: install git and clone repository
+        run: |
+          apt-get update
+          apt-get install -y git
+          git clone "git@github.com:${GITHUB_REPOSITORY}.git"
