@@ -18,9 +18,10 @@ $ pip install .
 
 # Documentation
 
-Documentation of this module is done by [Sphinx](https://www.sphinx-doc.org/en/master/).
-Run the following command on the path where this README.md file is located to build
-the document in HTML format.
+The documents can be found in https://jss95.github.io/dipcoat-substrate/.
+
+To generate a local copy, run the following command on the path where this
+README.md file is located.
 
 ```
 $ cd doc
