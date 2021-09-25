@@ -13,6 +13,7 @@ jobs:
   build-doc:
 
     runs-on: ubuntu-latest
+    container: debian:buster-slim
 
     steps: 
 
