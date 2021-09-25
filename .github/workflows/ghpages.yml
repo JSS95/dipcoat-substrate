@@ -1,0 +1,61 @@
+# Inspired by https://github.com/annegentle/create-demo
+# and https://github.com/zzsza/github-action-with-python
+
+name: push doc to github pages
+
+env:
+  GITHUB_ACTOR: JSS95
+  GITHUB_REPOSITORY: JSS95/dipcoat-substrate
+  SOURCE_BRANCH: gh-pages
+  GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+
+  build-doc:
+
+    runs-on: ubuntu-latest
+
+    steps: 
+
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install opencv-python matplotlib sphinx numpydoc sphinx_rtd_theme
+
+      - name: install git and clone repository
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git
+          git clone "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" .
+
+      - name: build document
+        run: |
+          cd doc
+          make html
+          cd ..
+
+      - name: copy document files to docs directory
+        run: |
+          rm -rf docs
+          mkdir docs
+          cp -r doc/build/html docs/
+          touch docs/.nojekyll
+
+      - name: checkout and push to source branch
+        run: |
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git checkout -b ${SOURCE_BRANCH}
+          git add --all
+          msg="update docs for commit ${GITHUB_SHA}"
+          git commit -am "COMMIT MESSAGE"
+          git push origin ${SOURCE_BRANCH} --force
