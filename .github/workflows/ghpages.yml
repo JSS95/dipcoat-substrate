@@ -28,6 +28,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install opencv-python matplotlib sphinx numpydoc sphinx_rtd_theme
 
+      - uses: actions/checkout@v2
+
       - name: build doc
         run: |
           cd doc
