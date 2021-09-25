@@ -48,6 +48,7 @@ jobs:
           rm -rf docs
           mkdir docs
           cp -r doc/build/html docs/
+          touch docs/.nojekyll
 
       - name: checkout and push to source branch
         run: |
