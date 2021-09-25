@@ -55,7 +55,9 @@ def imgconstruct(imgsize: Number, imgratio: Number,
     imgshape = make_shape(imgsize, imgratio)
     img = cv2.cvtColor(np.full(imgshape, 255, np.uint8), cv2.COLOR_GRAY2BGR)
 
-    color = (255, 0, 0)
-    cv2.rectangle(img, roipt1, roipt2, color)
+    img[:roipt1[1], :] = (0, 0, 0)
+
+    roicolor = (255, 0, 0)
+    cv2.rectangle(img, roipt1, roipt2, roicolor)
 
     return img
