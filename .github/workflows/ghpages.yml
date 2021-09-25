@@ -28,15 +28,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install opencv-python matplotlib sphinx numpydoc sphinx_rtd_theme
 
-      - uses: actions/checkout@v2
-
-      - name: build doc
-        run: |
-          cd doc
-          make html
-
       - name: install git and clone repository
         run: |
           sudo apt-get update
           sudo apt-get install -y git
           git clone "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" .
+
+      - name: build doc
+        run: |
+          cd doc
+          make html
