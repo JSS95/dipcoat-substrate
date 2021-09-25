@@ -6,12 +6,12 @@ name: push doc to github pages
 env:
   GITHUB_ACTOR: JSS95
   GITHUB_REPOSITORY: JSS95/dipcoat-substrate
-  SOURCE_BRANCH: testbranch # modify to gh-pages after all is done.
+  SOURCE_BRANCH: gh-pages
   GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
 
 on:
   push:
-    branches: [gh-pages] # modify to push on master after all is done.
+    branches: [master]
 
 jobs:
 
