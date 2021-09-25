@@ -43,6 +43,7 @@ def imgconstruct(imgsize: Union[int, float], imgratio: Union[int, float],
     .. plot::
         :include-source:
 
+        >>> import matplotlib.pyplot as plt
         >>> from dipcoatsubstrate.imgconstruct import imgconstruct
         >>> img = imgconstruct(1000, 4/3, 250, 4/3, (250, 250))
         >>> plt.imshow(img) #doctest: +SKIP
