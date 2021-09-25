@@ -57,5 +57,5 @@ jobs:
           git checkout -b ${SOURCE_BRANCH}
           git add --all
           msg="update docs for commit ${GITHUB_SHA}"
-          git commit -am "COMMIT MESSAGE"
+          git commit -am "${msg}"
           git push origin ${SOURCE_BRANCH} --force
