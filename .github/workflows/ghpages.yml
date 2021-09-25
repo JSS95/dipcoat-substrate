@@ -6,9 +6,12 @@ name: push doc to github pages
 env:
   GITHUB_ACTOR: JSS95
   GITHUB_REPOSITORY: JSS95/dipcoat-substrate
+  SOURCE_BRANCH: testbranch # modify to gh-pages after all is done.
   GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
 
-on: [push]  # modify to push on master after all is done.
+on:
+  push:
+    branches: [gh-pages] # modify to push on master after all is done.
 
 jobs:
 
@@ -38,3 +41,13 @@ jobs:
         run: |
           cd doc
           make html
+          cd ..
+
+      - name: checkout and push to source branch
+        run: |
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git checkout -b ${SOURCE_BRANCH}
+          git add --all
+          git commit -am "COMMIT MESSAGE"
+          git push origin ${SOURCE_BRANCH} --force
