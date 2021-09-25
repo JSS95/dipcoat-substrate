@@ -15,9 +15,12 @@ __all__ = [
 
 def imgconstruct(imgsize: Union[int, float], imgratio: Union[int, float],
                  roisize: Union[int, float], roiratio: Union[int, float],
-                 roiloc: Tuple[int, int]):
+                 roiloc: Tuple[int, int]) -> np.ndarray:
     """
     Constructs the artificial image of the substrate.
+
+    .. warning::
+        This function is not implemented yet.
 
     Parameters
     ==========
