@@ -45,6 +45,8 @@ jobs:
 
       - name: move document files to docs directory
         run: |
+          rm -rf docs
+          mkdir docs
           mv -v doc/build/html/* docs/
 
       - name: checkout and push to source branch
