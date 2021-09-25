@@ -15,12 +15,11 @@ jobs:
   build-doc:
 
     runs-on: ubuntu-latest
-    container: debian:buster-slim
 
     steps: 
 
       - name: install git and clone repository
         run: |
-          apt-get update
-          apt-get install -y git
+          sudo apt-get update
+          sudo apt-get install -y git
           git clone "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" .
