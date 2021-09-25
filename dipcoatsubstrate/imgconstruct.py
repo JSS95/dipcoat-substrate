@@ -5,7 +5,9 @@ Module to construct the artificial image of the substrate.
 
 import cv2
 import numpy as np
-from typing import Union, Tuple
+
+from numbers import Number
+from typing import Tuple
 
 
 __all__ = [
@@ -13,9 +15,8 @@ __all__ = [
 ]
 
 
-def imgconstruct(imgsize: Union[int, float], imgratio: Union[int, float],
-                 roisize: Union[int, float], roiratio: Union[int, float],
-                 roiloc: Tuple[int, int]) -> np.ndarray:
+def imgconstruct(imgsize: Number, imgratio: Number,
+                 roipt1: Tuple[int, int], roipt2: Tuple[int, int]) -> np.ndarray:
     """
     Constructs the artificial image of the substrate.
 
@@ -31,14 +32,8 @@ def imgconstruct(imgsize: Union[int, float], imgratio: Union[int, float],
     imgratio : number
         Aspect ratio of the image.
 
-    roisize : number
-        Diagonal size of the ROI.
-
-    roiratio : number
-        Aspect ratio of the ROI.
-
-    roiloc : (int, int)
-        (x, y) location of upper left point of the ROI.
+    roipt1, roipt2 : (int, int)
+        (x, y) location of two diagonal points of the ROI.
 
     Examples
     ========
@@ -48,7 +43,7 @@ def imgconstruct(imgsize: Union[int, float], imgratio: Union[int, float],
 
         >>> import matplotlib.pyplot as plt
         >>> from dipcoatsubstrate.imgconstruct import imgconstruct
-        >>> img = imgconstruct(1000, 4/3, 250, 4/3, (250, 250))
+        >>> img = imgconstruct(1000, 4/3, (250, 250), (500, 500))
         >>> plt.imshow(img) #doctest: +SKIP
 
     """
@@ -60,8 +55,7 @@ def imgconstruct(imgsize: Union[int, float], imgratio: Union[int, float],
     imgshape = make_shape(imgsize, imgratio)
     img = cv2.cvtColor(np.full(imgshape, 255, np.uint8), cv2.COLOR_GRAY2BGR)
 
-    roi_y, roi_x = make_shape(roisize, roiratio)
     color = (255, 0, 0)
-    cv2.rectangle(img, roiloc, (roiloc[0] + roi_x, roiloc[1] + roi_y), color)
+    cv2.rectangle(img, roipt1, roipt2, color)
 
     return img
