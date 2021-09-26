@@ -3,37 +3,79 @@ Module to construct the artificial image of the substrate.
 
 """
 
+from abc import ABCMeta, abstractmethod
 import cv2
 import numpy as np
 
-from numbers import Number
 from typing import Tuple
 
 
 __all__ = [
+    "ROISubstrate",
+    "ROIRectSubstrate",
     "imgconstruct",
 ]
 
 
-def imgconstruct(imgsize: Number, imgratio: Number,
-                 roipt1: Tuple[int, int], roipt2: Tuple[int, int]) -> np.ndarray:
+class ROISubstrate(metaclass=ABCMeta):
     """
-    Constructs the artificial image of the substrate.
+    Abstract base class for ROI image containing the substrate.
 
-    .. warning::
-        This function is not implemented yet.
+    Subclass must define :func:`image()<ROISubstrate.image>` property.
 
     Parameters
     ==========
 
-    imgsize : number
-        Diagonal size of the image.
+    shape
+        (width, height) of the ROI.
 
-    imgratio : number
-        Aspect ratio of the image.
+    Attributes
+    ==========
 
-    roipt1, roipt2 : (int, int)
-        (x, y) location of two diagonal points of the ROI.
+    shape : tuple
+        (width, height) of the ROI.
+
+    blank_image : np.ndarray
+        Image of the blank ROI without substrate.
+
+    """
+    def __init__(self, shape: Tuple[int, int]):
+        self.shape = shape
+        blankimg = np.full(shape, 255, np.uint8)
+        self.blank_image = cv2.cvtColor(blankimg, cv2.COLOR_GRAY2BGR)
+
+    @property
+    @abstractmethod
+    def image(self) -> np.ndarray:
+        """
+        Return the image of ROI with substrate drawn.
+
+        """
+        ...
+
+
+class SubstrateError(Exception):
+    pass
+
+
+class ROIRectSubstrate(ROISubstrate):
+    """
+    ROI image containing the rectangular substrate.
+
+    Parameters
+    ==========
+
+    shape
+        (width, height) of the ROI.
+
+    substshape
+        (width, height) of the substrate.
+
+    Attributes
+    ==========
+
+    substshape : tuple
+        (width, height) of the substrate.
 
     Examples
     ========
@@ -42,22 +84,67 @@ def imgconstruct(imgsize: Number, imgratio: Number,
         :include-source:
 
         >>> import matplotlib.pyplot as plt
-        >>> from dipcoatsubstrate.imgconstruct import imgconstruct
-        >>> img = imgconstruct(1000, 4/3, (250, 250), (500, 500))
+        >>> from dipcoatsubstrate.imgconstruct import ROIRectSubstrate
+        >>> subst = ROIRectSubstrate((600, 800), (200, 300))
+        >>> plt.imshow(subst.image) #doctest: +SKIP
+
+    """
+    def __init__(self, shape: Tuple[int, int], substshape: Tuple[int, int]):
+        super().__init__(shape)
+
+        if shape[0] < substshape[0]:
+            raise SubstrateError("Substrate is wider than the ROI")
+        if shape[1] < substshape[1]:
+            raise SubstrateError("Substrate is taller than the ROI")
+        self.substshape = substshape
+
+    @property
+    def image(self):
+        roi_w, _ = self.shape
+        subst_w, subst_h = self.substshape
+        width_margin = int((roi_w - subst_w)/2)
+        ret = self.blank_image.copy()
+        ret[:subst_h, width_margin:-width_margin] = (0, 0, 0)
+        return ret
+
+
+def imgconstruct(imgshape: Tuple[int, int], substrate: ROISubstrate,
+                 roipt: Tuple[int, int]) -> np.ndarray:
+    """
+    Constructs the artificial image of the substrate.
+
+    .. warning::
+        This function is not fully implemented yet.
+
+    Parameters
+    ==========
+
+    imgshape
+        (width, height) of the image.
+
+    substrate
+        ROI image containing the substrate.
+
+    roipt
+        (x, y) coordinates of top left point of the ROI.
+
+    Examples
+    ========
+
+    .. plot::
+        :include-source:
+
+        >>> import matplotlib.pyplot as plt
+        >>> from dipcoatsubstrate.imgconstruct import (imgconstruct,
+        ...     ROIRectSubstrate)
+        >>> subst = ROIRectSubstrate((600, 800), (200, 300))
+        >>> img = imgconstruct((1200, 1600), subst, (300, 400))
         >>> plt.imshow(img) #doctest: +SKIP
 
     """
-    def make_shape(size, ratio):
-        x = size*ratio/np.sqrt(1 + ratio**2)
-        y = size*ratio/np.sqrt(1 + ratio**2)
-        return (int(y), int(x))
-
-    imgshape = make_shape(imgsize, imgratio)
     img = cv2.cvtColor(np.full(imgshape, 255, np.uint8), cv2.COLOR_GRAY2BGR)
 
-    img[:roipt1[1], :] = (0, 0, 0)
-
-    roicolor = (255, 0, 0)
-    cv2.rectangle(img, roipt1, roipt2, roicolor)
+    roipt2 = (roipt[0] + substrate.shape[0], roipt[1] + substrate.shape[1])
+    img[roipt[0]:roipt2[0], roipt[1]:roipt2[1]] = substrate.image
 
     return img
