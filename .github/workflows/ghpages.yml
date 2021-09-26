@@ -40,6 +40,7 @@ jobs:
       - name: build document
         run: |
           cd doc
+          rm -rf build
           make html
           cd ..
 
