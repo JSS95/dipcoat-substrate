@@ -13,6 +13,7 @@ from typing import Tuple, Optional
 __all__ = [
     "ROISubstrate",
     "ROIRectSubstrate",
+    "ROICircSubstrate",
     "imgconstruct",
 ]
 
@@ -57,7 +58,7 @@ class ROISubstrate(metaclass=ABCMeta):
     @abstractclassmethod
     def random(cls, shape: Tuple[int, int], seed: Optional[int] = None):
         """
-        Return the randomized image of ROI with substrate drawn.
+        Return the randomized instance.
 
         Parameters
         ==========
@@ -71,7 +72,7 @@ class ROISubstrate(metaclass=ABCMeta):
         Returns
         =======
 
-        np.ndarray
+        ROISubstrate
 
         """
         ...
@@ -116,9 +117,9 @@ class ROIRectSubstrate(ROISubstrate):
         super().__init__(shape)
 
         if shape[0] < substshape[0]:
-            raise SubstrateError("Substrate is wider than the ROI")
-        if shape[1] < substshape[1]:
             raise SubstrateError("Substrate is taller than the ROI")
+        if shape[1] < substshape[1]:
+            raise SubstrateError("Substrate is wider than the ROI")
         self.substshape = substshape
 
     @property
@@ -137,6 +138,81 @@ class ROIRectSubstrate(ROISubstrate):
         substshape = (int(shape[0]*h_ratio), int(shape[1]*w_ratio))
         return cls(shape, substshape)
 
+
+class ROICircSubstrate(ROISubstrate):
+    """
+    ROI image containing the circular substrate.
+
+    Parameters
+    ==========
+
+    shape
+        (height, width) of the ROI.
+
+    r
+        Radius of the circular part.
+
+    l, w
+        Length and width of the branch part.
+
+    Attributes
+    ==========
+
+    r : int
+        Radius of the circular part.
+
+    l, w : int
+        Length and width of the branch part.
+
+    Examples
+    ========
+
+    .. plot::
+        :include-source:
+
+        >>> import matplotlib.pyplot as plt
+        >>> from dipcoatsubstrate.imgconstruct import ROICircSubstrate
+        >>> subst = ROICircSubstrate((600, 400), 100, 400, 50)
+        >>> plt.imshow(subst.image) #doctest: +SKIP
+
+    """
+    def __init__(self, shape: Tuple[int, int], r: int, l: int, w: int):
+        super().__init__(shape)
+
+        if 2*r < w:
+            raise SubstrateError("Substrate branch is wider than the circle")
+        if min(shape) < 2*r:
+            raise SubstrateError("Substrate is larger than the ROI")
+        if shape[0] < l + r:
+            raise SubstrateError("Substrate is longer than the ROI")
+        if shape[1] < w:
+            raise SubstrateError("Substrate is wider than the ROI")
+
+        self.r = r
+        self.l = l
+        self.w = w
+
+    @property
+    def image(self):
+        ret = self.blank_image.copy()
+        center = (int(self.shape[1]/2), self.l)
+        cv2.circle(ret, center, self.r, (0, 0, 0), -1)
+
+        p1 = (int(self.shape[1]/2 - self.w/2), 0)
+        p2 = (int(self.shape[1]/2 + self.w/2), self.l)
+        cv2.rectangle(ret, p1, p2, (0, 0, 0), -1)
+
+        return ret
+
+    @classmethod
+    def random(cls, shape: Tuple[int, int], seed: Optional[int] = None):
+        np.random.seed(seed)
+        r = int(np.random.randint(min(shape)/4, min(shape))/2)
+        np.random.seed(seed)
+        l = np.random.randint(max(shape[0]/2 - r, 0), shape[0] - r)
+        np.random.seed(seed)
+        w = np.random.randint(r/10, 2*r)
+        return cls(shape, r, l, w)
 
 def imgconstruct(imgshape: Tuple[int, int], substrate: ROISubstrate,
                  roipt: Tuple[int, int]) -> np.ndarray:
@@ -163,12 +239,22 @@ def imgconstruct(imgshape: Tuple[int, int], substrate: ROISubstrate,
 
     .. plot::
         :include-source:
+        :context: reset
 
         >>> import matplotlib.pyplot as plt
         >>> from dipcoatsubstrate.imgconstruct import (imgconstruct,
         ...     ROIRectSubstrate)
         >>> subst = ROIRectSubstrate((600, 800), (500, 600))
         >>> img = imgconstruct((1200, 1600), subst, (300, 400))
+        >>> plt.imshow(img) #doctest: +SKIP
+
+    .. plot::
+        :include-source:
+        :context: close-figs
+
+        >>> from dipcoatsubstrate.imgconstruct import ROICircSubstrate
+        >>> subst = ROICircSubstrate((600, 400), 100, 400, 50)
+        >>> img = imgconstruct((1000, 1200), subst, (300, 400))
         >>> plt.imshow(img) #doctest: +SKIP
 
     """
