@@ -13,6 +13,7 @@ from typing import Tuple, Optional
 __all__ = [
     "ROISubstrate",
     "ROIRectSubstrate",
+    "ROICircSubstrate",
     "imgconstruct",
 ]
 
@@ -116,9 +117,9 @@ class ROIRectSubstrate(ROISubstrate):
         super().__init__(shape)
 
         if shape[0] < substshape[0]:
-            raise SubstrateError("Substrate is wider than the ROI")
-        if shape[1] < substshape[1]:
             raise SubstrateError("Substrate is taller than the ROI")
+        if shape[1] < substshape[1]:
+            raise SubstrateError("Substrate is wider than the ROI")
         self.substshape = substshape
 
     @property
@@ -136,6 +137,76 @@ class ROIRectSubstrate(ROISubstrate):
         h_ratio, w_ratio = np.random.uniform(0.5, 0.9, 2)
         substshape = (int(shape[0]*h_ratio), int(shape[1]*w_ratio))
         return cls(shape, substshape)
+
+
+class ROICircSubstrate(ROISubstrate):
+    """
+    ROI image containing the circular substrate.
+
+    Parameters
+    ==========
+
+    shape
+        (height, width) of the ROI.
+
+    r
+        Radius of the circular part.
+
+    l, w
+        Length and width of the branch part.
+
+    Attributes
+    ==========
+
+    r : int
+        Radius of the circular part.
+
+    l, w : int
+        Length and width of the branch part.
+
+    Examples
+    ========
+
+    .. plot::
+        :include-source:
+
+        >>> import matplotlib.pyplot as plt
+        >>> from dipcoatsubstrate.imgconstruct import ROICircSubstrate
+        >>> subst = ROICircSubstrate((600, 400), 100, 400, 50)
+        >>> plt.imshow(subst.image) #doctest: +SKIP
+
+    """
+    def __init__(self, shape: Tuple[int, int], r: int, l: int, w: int):
+        super().__init__(shape)
+
+        if 2*r < w:
+            raise SubstrateError("Substrate branch is wider than the circle")
+        if min(shape) < r:
+            raise SubstrateError("Substrate is larger than the ROI")
+        if shape[0] < l + r:
+            raise SubstrateError("Substrate is longer than the ROI")
+        if shape[1] < w:
+            raise SubstrateError("Substrate is wider than the ROI")
+
+        self.r = r
+        self.l = l
+        self.w = w
+
+    @property
+    def image(self):
+        ret = self.blank_image.copy()
+        center = (int(self.shape[1]/2), self.l)
+        cv2.circle(ret, center, self.r, (0, 0, 0), -1)
+
+        p1 = (int(self.shape[1]/2 - self.w/2), 0)
+        p2 = (int(self.shape[1]/2 + self.w/2), self.l)
+        cv2.rectangle(ret, p1, p2, (0, 0, 0), -1)
+
+        return ret
+
+    @classmethod
+    def random(cls, shape: Tuple[int, int], seed: Optional[int] = None):
+        raise NotImplementedError
 
 
 def imgconstruct(imgshape: Tuple[int, int], substrate: ROISubstrate,
