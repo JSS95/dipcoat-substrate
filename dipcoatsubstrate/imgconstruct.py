@@ -177,4 +177,6 @@ def imgconstruct(imgshape: Tuple[int, int], substrate: ROISubstrate,
     roipt2 = (roipt[0] + substrate.shape[0], roipt[1] + substrate.shape[1])
     img[roipt[0]:roipt2[0], roipt[1]:roipt2[1]] = substrate.image
 
+    img[:roipt[0]] = (0, 0, 0)
+
     return img
