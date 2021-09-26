@@ -7,7 +7,7 @@ from abc import ABCMeta, abstractmethod
 import cv2
 import numpy as np
 
-from typing import Tuple
+from typing import Tuple, Optional
 
 
 __all__ = [
@@ -106,6 +106,13 @@ class ROIRectSubstrate(ROISubstrate):
         ret = self.blank_image.copy()
         ret[:subst_h, width_margin:-width_margin] = (0, 0, 0)
         return ret
+
+    @classmethod
+    def random(cls, shape: Tuple[int, int], seed: Optional[int] = None):
+        np.random.seed(seed)
+        h_ratio, w_ratio = np.random.uniform(0.5, 0.9, 2)
+        substshape = (int(shape[0]*h_ratio), int(shape[1]*w_ratio))
+        return cls(shape, substshape)
 
 
 def imgconstruct(imgshape: Tuple[int, int], substrate: ROISubstrate,
