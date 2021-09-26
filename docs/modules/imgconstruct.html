@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imgconstruct &mdash; dipcoat-substrate  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Module Reference" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> dipcoat-substrate
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Module Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">imgconstruct</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">dipcoat-substrate</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Module Reference</a> &raquo;</li>
+      <li>imgconstruct</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/imgconstruct.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="imgconstruct">
+<span id="id1"></span><h1>imgconstruct<a class="headerlink" href="#imgconstruct" title="Permalink to this headline"></a></h1>
+<span class="target" id="module-dipcoatsubstrate.imgconstruct"></span><p>Module to construct the artificial image of the substrate.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="dipcoatsubstrate.imgconstruct.ROICircSubstrate">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dipcoatsubstrate.imgconstruct.</span></span><span class="sig-name descname"><span class="pre">ROICircSubstrate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dipcoatsubstrate.imgconstruct.ROICircSubstrate" title="Permalink to this definition"></a></dt>
+<dd><p>ROI image containing the circular substrate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>shape</strong></dt><dd><p>(height, width) of the ROI.</p>
+</dd>
+<dt><strong>r</strong></dt><dd><p>Radius of the circular part.</p>
+</dd>
+<dt><strong>l, w</strong></dt><dd><p>Length and width of the branch part.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dipcoatsubstrate.imgconstruct</span> <span class="kn">import</span> <span class="n">ROICircSubstrate</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">subst</span> <span class="o">=</span> <span class="n">ROICircSubstrate</span><span class="p">((</span><span class="mi">600</span><span class="p">,</span> <span class="mi">400</span><span class="p">),</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">subst</span><span class="o">.</span><span class="n">image</span><span class="p">)</span> 
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../modules/imgconstruct-1.py">Source code</a>, <a class="reference external" href="../modules/imgconstruct-1.png">png</a>, <a class="reference external" href="../modules/imgconstruct-1.hires.png">hires.png</a>, <a class="reference external" href="../modules/imgconstruct-1.pdf">pdf</a>)</p>
+<figure class="align-default">
+<img alt="../_images/imgconstruct-1.png" class="plot-directive" src="../_images/imgconstruct-1.png" />
+</figure>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>r</strong><span class="classifier">int</span></dt><dd><p>Radius of the circular part.</p>
+</dd>
+<dt><strong>l, w</strong><span class="classifier">int</span></dt><dd><p>Length and width of the branch part.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="dipcoatsubstrate.imgconstruct.ROICircSubstrate.image">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">image</span></span><a class="headerlink" href="#dipcoatsubstrate.imgconstruct.ROICircSubstrate.image" title="Permalink to this definition"></a></dt>
+<dd><p>Return the image of ROI with substrate drawn.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dipcoatsubstrate.imgconstruct.ROIRectSubstrate">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dipcoatsubstrate.imgconstruct.</span></span><span class="sig-name descname"><span class="pre">ROIRectSubstrate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">substshape</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dipcoatsubstrate.imgconstruct.ROIRectSubstrate" title="Permalink to this definition"></a></dt>
+<dd><p>ROI image containing the rectangular substrate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>shape</strong></dt><dd><p>(height, width) of the ROI.</p>
+</dd>
+<dt><strong>substshape</strong></dt><dd><p>(height, width) of the substrate.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dipcoatsubstrate.imgconstruct</span> <span class="kn">import</span> <span class="n">ROIRectSubstrate</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">subst</span> <span class="o">=</span> <span class="n">ROIRectSubstrate</span><span class="p">((</span><span class="mi">600</span><span class="p">,</span> <span class="mi">800</span><span class="p">),</span> <span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">600</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">subst</span><span class="o">.</span><span class="n">image</span><span class="p">)</span> 
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../modules/imgconstruct-2.py">Source code</a>, <a class="reference external" href="../modules/imgconstruct-2.png">png</a>, <a class="reference external" href="../modules/imgconstruct-2.hires.png">hires.png</a>, <a class="reference external" href="../modules/imgconstruct-2.pdf">pdf</a>)</p>
+<figure class="align-default">
+<img alt="../_images/imgconstruct-2.png" class="plot-directive" src="../_images/imgconstruct-2.png" />
+</figure>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>substshape</strong><span class="classifier">tuple</span></dt><dd><p>(height, width) of the substrate.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="dipcoatsubstrate.imgconstruct.ROIRectSubstrate.image">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">image</span></span><a class="headerlink" href="#dipcoatsubstrate.imgconstruct.ROIRectSubstrate.image" title="Permalink to this definition"></a></dt>
+<dd><p>Return the image of ROI with substrate drawn.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dipcoatsubstrate.imgconstruct.ROISubstrate">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">dipcoatsubstrate.imgconstruct.</span></span><span class="sig-name descname"><span class="pre">ROISubstrate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dipcoatsubstrate.imgconstruct.ROISubstrate" title="Permalink to this definition"></a></dt>
+<dd><p>Abstract base class for ROI image containing the substrate.</p>
+<p>Subclass must define <a class="reference internal" href="#dipcoatsubstrate.imgconstruct.ROISubstrate.image" title="dipcoatsubstrate.imgconstruct.ROISubstrate.image"><code class="xref py py-func docutils literal notranslate"><span class="pre">image()</span></code></a> property, and
+<a class="reference internal" href="#dipcoatsubstrate.imgconstruct.ROISubstrate.random" title="dipcoatsubstrate.imgconstruct.ROISubstrate.random"><code class="xref py py-func docutils literal notranslate"><span class="pre">random()</span></code></a> method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>shape</strong></dt><dd><p>(height, width) of the ROI.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Attributes</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>shape</strong><span class="classifier">tuple</span></dt><dd><p>(height, width) of the ROI.</p>
+</dd>
+<dt><strong>blank_image</strong><span class="classifier">np.ndarray</span></dt><dd><p>Image of the blank ROI without substrate.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="dipcoatsubstrate.imgconstruct.ROISubstrate.image">
+<em class="property"><span class="pre">abstract</span> <span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">image</span></span><em class="property"><span class="pre">:</span> <span class="pre">numpy.ndarray</span></em><a class="headerlink" href="#dipcoatsubstrate.imgconstruct.ROISubstrate.image" title="Permalink to this definition"></a></dt>
+<dd><p>Return the image of ROI with substrate drawn.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dipcoatsubstrate.imgconstruct.ROISubstrate.random">
+<em class="property"><span class="pre">abstract</span> <span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">random</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dipcoatsubstrate.imgconstruct.ROISubstrate.random" title="Permalink to this definition"></a></dt>
+<dd><p>Return the randomized instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>shape</strong></dt><dd><p>Shape of the full image.</p>
+</dd>
+<dt><strong>seed</strong></dt><dd><p>Randomizing seed.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>ROISubstrate</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dipcoatsubstrate.imgconstruct.imgconstruct">
+<span class="sig-prename descclassname"><span class="pre">dipcoatsubstrate.imgconstruct.</span></span><span class="sig-name descname"><span class="pre">imgconstruct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imgshape</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">substrate</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#dipcoatsubstrate.imgconstruct.ROISubstrate" title="dipcoatsubstrate.imgconstruct.ROISubstrate"><span class="pre">dipcoatsubstrate.imgconstruct.ROISubstrate</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">roipt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#dipcoatsubstrate.imgconstruct.imgconstruct" title="Permalink to this definition"></a></dt>
+<dd><p>Constructs the artificial image of the substrate.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function is not fully implemented yet.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>imgshape</strong></dt><dd><p>(height, width) of the image.</p>
+</dd>
+<dt><strong>substrate</strong></dt><dd><p>ROI image containing the substrate.</p>
+</dd>
+<dt><strong>roipt</strong></dt><dd><p>(x, y) coordinates of top left point of the ROI.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dipcoatsubstrate.imgconstruct</span> <span class="kn">import</span> <span class="p">(</span><span class="n">imgconstruct</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">ROIRectSubstrate</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">subst</span> <span class="o">=</span> <span class="n">ROIRectSubstrate</span><span class="p">((</span><span class="mi">600</span><span class="p">,</span> <span class="mi">800</span><span class="p">),</span> <span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">600</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">imgconstruct</span><span class="p">((</span><span class="mi">1200</span><span class="p">,</span> <span class="mi">1600</span><span class="p">),</span> <span class="n">subst</span><span class="p">,</span> <span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">400</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> 
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../modules/imgconstruct-3.py">Source code</a>, <a class="reference external" href="../modules/imgconstruct-3.png">png</a>, <a class="reference external" href="../modules/imgconstruct-3.hires.png">hires.png</a>, <a class="reference external" href="../modules/imgconstruct-3.pdf">pdf</a>)</p>
+<figure class="align-default">
+<img alt="../_images/imgconstruct-3.png" class="plot-directive" src="../_images/imgconstruct-3.png" />
+</figure>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dipcoatsubstrate.imgconstruct</span> <span class="kn">import</span> <span class="n">ROICircSubstrate</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">subst</span> <span class="o">=</span> <span class="n">ROICircSubstrate</span><span class="p">((</span><span class="mi">600</span><span class="p">,</span> <span class="mi">400</span><span class="p">),</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">imgconstruct</span><span class="p">((</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1200</span><span class="p">),</span> <span class="n">subst</span><span class="p">,</span> <span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">400</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> 
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../modules/imgconstruct-4.py">Source code</a>, <a class="reference external" href="../modules/imgconstruct-4.png">png</a>, <a class="reference external" href="../modules/imgconstruct-4.hires.png">hires.png</a>, <a class="reference external" href="../modules/imgconstruct-4.pdf">pdf</a>)</p>
+<figure class="align-default">
+<img alt="../_images/imgconstruct-4.png" class="plot-directive" src="../_images/imgconstruct-4.png" />
+</figure>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Module Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Jisoo Song.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
