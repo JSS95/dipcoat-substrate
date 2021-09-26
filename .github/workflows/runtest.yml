@@ -38,7 +38,7 @@ jobs:
       - name: install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install opencv-python
+          pip install opencv-python pytest
 
       - uses: actions/checkout@v2
 
