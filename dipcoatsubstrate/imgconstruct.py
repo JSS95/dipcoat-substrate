@@ -3,11 +3,11 @@ Module to construct the artificial image of the substrate.
 
 """
 
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta, abstractmethod, abstractclassmethod
 import cv2
 import numpy as np
 
-from typing import Tuple
+from typing import Tuple, Optional
 
 
 __all__ = [
@@ -21,7 +21,8 @@ class ROISubstrate(metaclass=ABCMeta):
     """
     Abstract base class for ROI image containing the substrate.
 
-    Subclass must define :func:`image()<ROISubstrate.image>` property.
+    Subclass must define :func:`image()<ROISubstrate.image>` property, and
+    :func:`random()<ROISubstrate.random>` method.
 
     Parameters
     ==========
@@ -49,6 +50,28 @@ class ROISubstrate(metaclass=ABCMeta):
     def image(self) -> np.ndarray:
         """
         Return the image of ROI with substrate drawn.
+
+        """
+        ...
+
+    @abstractclassmethod
+    def random(cls, shape: Tuple[int, int], seed: Optional[int] = None):
+        """
+        Return the randomized image of ROI with substrate drawn.
+
+        Parameters
+        ==========
+
+        shape
+            Shape of the full image.
+
+        seed
+            Randomizing seed.
+
+        Returns
+        =======
+
+        np.ndarray
 
         """
         ...
@@ -106,6 +129,13 @@ class ROIRectSubstrate(ROISubstrate):
         ret = self.blank_image.copy()
         ret[:subst_h, width_margin:-width_margin] = (0, 0, 0)
         return ret
+
+    @classmethod
+    def random(cls, shape: Tuple[int, int], seed: Optional[int] = None):
+        np.random.seed(seed)
+        h_ratio, w_ratio = np.random.uniform(0.5, 0.9, 2)
+        substshape = (int(shape[0]*h_ratio), int(shape[1]*w_ratio))
+        return cls(shape, substshape)
 
 
 def imgconstruct(imgshape: Tuple[int, int], substrate: ROISubstrate,
