@@ -23,9 +23,30 @@ jobs:
 
       - run: flake8
 
-  doc:
+  pytest:
 
     needs: flake8
+
+    runs-on: ubuntu-latest
+
+    steps: 
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+
+      - name: install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install opencv-python matplotlib pytest
+
+      - uses: actions/checkout@v2
+
+      - run: pytest
+
+  doc:
+
+    needs: pytest
 
     runs-on: ubuntu-latest
 

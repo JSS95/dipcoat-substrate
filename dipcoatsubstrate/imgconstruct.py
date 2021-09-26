@@ -27,13 +27,13 @@ class ROISubstrate(metaclass=ABCMeta):
     ==========
 
     shape
-        (width, height) of the ROI.
+        (height, width) of the ROI.
 
     Attributes
     ==========
 
     shape : tuple
-        (width, height) of the ROI.
+        (height, width) of the ROI.
 
     blank_image : np.ndarray
         Image of the blank ROI without substrate.
@@ -66,16 +66,16 @@ class ROIRectSubstrate(ROISubstrate):
     ==========
 
     shape
-        (width, height) of the ROI.
+        (height, width) of the ROI.
 
     substshape
-        (width, height) of the substrate.
+        (height, width) of the substrate.
 
     Attributes
     ==========
 
     substshape : tuple
-        (width, height) of the substrate.
+        (height, width) of the substrate.
 
     Examples
     ========
@@ -85,7 +85,7 @@ class ROIRectSubstrate(ROISubstrate):
 
         >>> import matplotlib.pyplot as plt
         >>> from dipcoatsubstrate.imgconstruct import ROIRectSubstrate
-        >>> subst = ROIRectSubstrate((600, 800), (200, 300))
+        >>> subst = ROIRectSubstrate((600, 800), (500, 600))
         >>> plt.imshow(subst.image) #doctest: +SKIP
 
     """
@@ -100,8 +100,8 @@ class ROIRectSubstrate(ROISubstrate):
 
     @property
     def image(self):
-        roi_w, _ = self.shape
-        subst_w, subst_h = self.substshape
+        _, roi_w = self.shape
+        subst_h, subst_w = self.substshape
         width_margin = int((roi_w - subst_w)/2)
         ret = self.blank_image.copy()
         ret[:subst_h, width_margin:-width_margin] = (0, 0, 0)
@@ -120,7 +120,7 @@ def imgconstruct(imgshape: Tuple[int, int], substrate: ROISubstrate,
     ==========
 
     imgshape
-        (width, height) of the image.
+        (height, width) of the image.
 
     substrate
         ROI image containing the substrate.
@@ -137,7 +137,7 @@ def imgconstruct(imgshape: Tuple[int, int], substrate: ROISubstrate,
         >>> import matplotlib.pyplot as plt
         >>> from dipcoatsubstrate.imgconstruct import (imgconstruct,
         ...     ROIRectSubstrate)
-        >>> subst = ROIRectSubstrate((600, 800), (200, 300))
+        >>> subst = ROIRectSubstrate((600, 800), (500, 600))
         >>> img = imgconstruct((1200, 1600), subst, (300, 400))
         >>> plt.imshow(img) #doctest: +SKIP
 
