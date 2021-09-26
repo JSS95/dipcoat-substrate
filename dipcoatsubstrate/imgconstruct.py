@@ -234,12 +234,22 @@ def imgconstruct(imgshape: Tuple[int, int], substrate: ROISubstrate,
 
     .. plot::
         :include-source:
+        :context: reset
 
         >>> import matplotlib.pyplot as plt
         >>> from dipcoatsubstrate.imgconstruct import (imgconstruct,
         ...     ROIRectSubstrate)
         >>> subst = ROIRectSubstrate((600, 800), (500, 600))
         >>> img = imgconstruct((1200, 1600), subst, (300, 400))
+        >>> plt.imshow(img) #doctest: +SKIP
+
+    .. plot::
+        :include-source:
+        :context: close-figs
+
+        >>> from dipcoatsubstrate.imgconstruct import ROICircSubstrate
+        >>> subst = ROICircSubstrate((600, 400), 100, 400, 50)
+        >>> img = imgconstruct((1000, 1200), subst, (300, 400))
         >>> plt.imshow(img) #doctest: +SKIP
 
     """
