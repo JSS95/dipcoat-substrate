@@ -181,7 +181,7 @@ class ROICircSubstrate(ROISubstrate):
 
         if 2*r < w:
             raise SubstrateError("Substrate branch is wider than the circle")
-        if min(shape) < r:
+        if min(shape) < 2*r:
             raise SubstrateError("Substrate is larger than the ROI")
         if shape[0] < l + r:
             raise SubstrateError("Substrate is longer than the ROI")
@@ -206,8 +206,13 @@ class ROICircSubstrate(ROISubstrate):
 
     @classmethod
     def random(cls, shape: Tuple[int, int], seed: Optional[int] = None):
-        raise NotImplementedError
-
+        np.random.seed(seed)
+        r = int(np.random.randint(min(shape)/4, min(shape))/2)
+        np.random.seed(seed)
+        l = np.random.randint(max(shape[0]/2 - r, 0), shape[0] - r)
+        np.random.seed(seed)
+        w = np.random.randint(r/10, 2*r)
+        return cls(shape, r, l, w)
 
 def imgconstruct(imgshape: Tuple[int, int], substrate: ROISubstrate,
                  roipt: Tuple[int, int]) -> np.ndarray:
