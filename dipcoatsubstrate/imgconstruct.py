@@ -58,7 +58,7 @@ class ROISubstrate(metaclass=ABCMeta):
     @abstractclassmethod
     def random(cls, shape: Tuple[int, int], seed: Optional[int] = None):
         """
-        Return the randomized image of ROI with substrate drawn.
+        Return the randomized instance.
 
         Parameters
         ==========
@@ -72,7 +72,7 @@ class ROISubstrate(metaclass=ABCMeta):
         Returns
         =======
 
-        np.ndarray
+        ROISubstrate
 
         """
         ...
