@@ -3,7 +3,7 @@ Module to construct the artificial image of the substrate.
 
 """
 
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta, abstractmethod, abstractclassmethod
 import cv2
 import numpy as np
 
@@ -21,7 +21,8 @@ class ROISubstrate(metaclass=ABCMeta):
     """
     Abstract base class for ROI image containing the substrate.
 
-    Subclass must define :func:`image()<ROISubstrate.image>` property.
+    Subclass must define :func:`image()<ROISubstrate.image>` property, and
+    :func:`random()<ROISubstrate.random>` method.
 
     Parameters
     ==========
@@ -49,6 +50,28 @@ class ROISubstrate(metaclass=ABCMeta):
     def image(self) -> np.ndarray:
         """
         Return the image of ROI with substrate drawn.
+
+        """
+        ...
+
+    @abstractclassmethod
+    def random(cls, shape: Tuple[int, int], seed: Optional[int] = None):
+        """
+        Return the randomized image of ROI with substrate drawn.
+
+        Parameters
+        ==========
+
+        shape
+            Shape of the full image.
+
+        seed
+            Randomizing seed.
+
+        Returns
+        =======
+
+        np.ndarray
 
         """
         ...
